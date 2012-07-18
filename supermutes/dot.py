@@ -10,6 +10,11 @@ def register(old_class, new_class):
     CLASS_REGISTER[old_class] = new_class
 
 
+def reset_mapping():
+    register(dict, DotDict)
+    register(list, DotList)
+
+
 class DotList(list):
     """
     A list that allows dot notation access to its items.
@@ -90,5 +95,4 @@ class DotDict(dict):
     __setattr__ = __setitem__
 
 
-register(dict, DotDict)
-register(list, DotList)
+reset_mapping()

@@ -8,6 +8,11 @@ def register(old_class, new_class):
     CLASS_REGISTER[old_class] = new_class
 
 
+def reset_mapping():
+    register(dict, ReadOnlyDict)
+    register(list, ReadOnlyList)
+
+
 class ReadOnlyClassException(Exception):
     pass
 
@@ -38,5 +43,4 @@ class ReadOnlyDict(ReadOnlyBaseClass, dict):
         return readonly(dict.__getitem__(self, key))
 
 
-register(dict, ReadOnlyDict)
-register(list, ReadOnlyList)
+reset_mapping()

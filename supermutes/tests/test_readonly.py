@@ -1,7 +1,7 @@
-from nose.tools import assert_equals, assert_true
+from nose.tools import assert_equals, assert_true, assert_false
 
 from supermutes.readonly import (
-    ReadOnlyClassException, readonly
+    ReadOnlyClassException, readonly, ReadOnlyList, reset_mapping
     )
 
 
@@ -94,3 +94,21 @@ def test_blocks_writes_on_mix_of_dicts_and_lists():
     except ReadOnlyClassException:
         raised = True
     assert_true(raised)
+
+
+def test_defining_inherited_classes_alters_mapping():
+    """
+    Test that we can safely define inherited classes and they will be used.
+    """
+    class MySubClass(ReadOnlyList):
+        pass
+
+    rl = readonly([[0]])
+    assert_true(isinstance(rl, MySubClass))
+    assert_true(isinstance(rl[0], MySubClass))
+
+    reset_mapping()
+    # Confirm reset has worked
+    rl = readonly([[0]])
+    assert_false(isinstance(rl, MySubClass))
+    assert_false(isinstance(rl[0], MySubClass))

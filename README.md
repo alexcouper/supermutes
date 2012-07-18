@@ -37,3 +37,33 @@ eg::
     supermutes.readonly.ReadOnlyClassException: Cannot write to object.
     >> r['b']['d'] = 6
     supermutes.readonly.ReadOnlyClassException: Cannot write to object.
+
+
+Creating Sub Classes
+--------------------
+
+Upon declaration of a sub class of any of the supermutes, that class will be
+set as the defacto class for recursively changing data sets.
+
+To reset the classes back to the original set, use the ``reset_mapping`` method
+inside the module
+
+eg::
+
+    >>> from supermutes.dot import DotDict, DotList, reset_mapping
+    >>> class MySubClass(DotDict): pass
+    >>> d = MySubClass({'a': {'b': {'c': 3}}})
+    >>> d['a']['b']
+    {'c': 3}
+    >>> d['a']['b'].__class__
+    <class '__main__.MySubClass'>
+    >>> f = DotList([1, {}])
+    >>> f[1].__class__
+    <class '__main__.MySubClass'>
+    >>> reset_mapping()
+    >>> f = DotList([1, {}])
+    >>> f[1].__class__
+    <class 'supermutes.dot.DotDict'>
+
+
+

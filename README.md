@@ -53,9 +53,9 @@ eg::
     >>> from supermutes.dot import DotDict, DotList, reset_mapping
     >>> class MySubClass(DotDict): pass
     >>> d = MySubClass({'a': {'b': {'c': 3}}})
-    >>> d['a']['b']
+    >>> d.a.b
     {'c': 3}
-    >>> d['a']['b'].__class__
+    >>> d.a.b.__class__
     <class '__main__.MySubClass'>
     >>> f = DotList([1, {}])
     >>> f[1].__class__

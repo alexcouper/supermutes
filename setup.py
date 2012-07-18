@@ -9,7 +9,7 @@ setup(
     name='supermutes',
     description='A collection of super mutables',
     long_description=long_description,
-    version='1.0.1',
+    version='1.0.2',
     author='Alex Couper',
     author_email='info@alexcouper.com',
     url='https://github.com/alexcouper/supermutes',

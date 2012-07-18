@@ -1,11 +1,13 @@
+from supermutes.utils import get_new_obj, get_class_registrar
 
 
-def dotify(obj):
-    if isinstance(obj, list) and not isinstance(obj, DotList):
-        return DotList(obj)
-    elif isinstance(obj, dict) and not isinstance(obj, DotDict):
-        return DotDict(obj)
-    return obj
+CLASS_REGISTER = {}
+
+dotify = lambda obj: get_new_obj(CLASS_REGISTER, obj)
+
+
+def register(old_class, new_class):
+    CLASS_REGISTER[old_class] = new_class
 
 
 class DotList(list):
@@ -25,6 +27,8 @@ class DotList(list):
     IndexError
 
     """
+    __metaclass__ = get_class_registrar("DotList", list, register)
+
     def __init__(self, *args, **kwargs):
         list.__init__(self, *args, **kwargs)
         for i, value in enumerate(self):
@@ -72,17 +76,19 @@ class DotDict(dict):
     >>  d
     {'c': 99}
     """
-    def __init__(self, value=None):
-        if value is None:
-            pass
-        elif isinstance(value, dict):
-            for key in value:
-                self[key] = value[key]
-        else:
-            raise TypeError('Expected dict')
+    __metaclass__ = get_class_registrar("DotDict", dict, register)
+
+    def __init__(self, *args, **kwargs):
+        dict.__init__(self, *args, **kwargs)
+        for key, value in self.items():
+            self[key] = value
 
     def __setitem__(self, key, value):
         dict.__setitem__(self, key, dotify(value))
 
     __getattr__ = dict.__getitem__
     __setattr__ = __setitem__
+
+
+register(dict, DotDict)
+register(list, DotList)

@@ -1,16 +1,17 @@
 "A collection of readonly immutables"
+from supermutes.utils import get_new_obj, get_class_registrar
+
+CLASS_REGISTER = {}
+
+
+def register(old_class, new_class):
+    CLASS_REGISTER[old_class] = new_class
 
 
 class ReadOnlyClassException(Exception):
     pass
 
-
-def readonly(obj):
-    if isinstance(obj, list) and not isinstance(obj, ReadOnlyList):
-        return ReadOnlyList(obj)
-    elif isinstance(obj, dict) and not isinstance(obj, ReadOnlyDict):
-        return ReadOnlyDict(obj)
-    return obj
+readonly = lambda obj: get_new_obj(CLASS_REGISTER, obj)
 
 
 class ReadOnlyBaseClass():
@@ -23,11 +24,19 @@ class ReadOnlyBaseClass():
 
 class ReadOnlyList(ReadOnlyBaseClass, list):
 
+    __metaclass__ = get_class_registrar("ReadOnlyList", list, register)
+
     def __getitem__(self, index):
         return readonly(list.__getitem__(self, index))
 
 
 class ReadOnlyDict(ReadOnlyBaseClass, dict):
 
+    __metaclass__ = get_class_registrar("ReadOnlyDict", dict, register)
+
     def __getitem__(self, key):
         return readonly(dict.__getitem__(self, key))
+
+
+register(dict, ReadOnlyDict)
+register(list, ReadOnlyList)

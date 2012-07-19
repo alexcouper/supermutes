@@ -20,7 +20,9 @@ class ReadOnlyBaseClass():
     def method_not_allowed(self, *args, **kwargs):
         raise ReadOnlyClassException("Cannot write to object.")
 
-    __setitem__ = __setattr__ = append = insert = method_not_allowed
+    (__setitem__, __setattr__, __delitem__, __setslice__, __delslice__,
+     append, insert, pop, popitem, remove, clear, update, extend,
+     reverse, sort) = (method_not_allowed,) * 15
 
 
 class ReadOnlyList(ReadOnlyBaseClass, list):

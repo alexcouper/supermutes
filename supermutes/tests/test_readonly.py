@@ -34,19 +34,39 @@ def test_blocks_write_to_list():
         raised = True
     assert_true(raised)
 
-    raised = False
     try:
-        d.append("hello")
+        del d[2]
     except ReadOnlyClassException:
         raised = True
     assert_true(raised)
 
-    raised = False
     try:
-        d.insert(3, "hello")
+        del d[0:1]
     except ReadOnlyClassException:
         raised = True
     assert_true(raised)
+
+    try:
+        d[0:1] = [1, 2]
+    except ReadOnlyClassException:
+        raised = True
+    assert_true(raised)
+
+    for method, args in [
+                        (d.append, ("hello",)),
+                        (d.insert, (3, "hello")),
+                        (d.pop, ()),
+                        (d.reverse, ()),
+                        (d.sort, ()),
+                        (d.extend, ([1, 2, 3]))
+                        ]:
+        raised = False
+        try:
+            print method
+            method(*args)
+        except ReadOnlyClassException:
+            raised = True
+        assert_true(raised)
 
 
 def test_blocks_write_to_sub_list():

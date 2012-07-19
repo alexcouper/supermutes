@@ -112,3 +112,38 @@ def test_defining_inherited_classes_alters_mapping():
     rl = readonly([[0]])
     assert_false(isinstance(rl, MySubClass))
     assert_false(isinstance(rl[0], MySubClass))
+
+
+def test_get_writable_version_of_the_object():
+    """
+    Test get_writable returns a fully writable version of the mutable.
+    """
+    d = readonly({
+        'list_of_dicts': [
+            {'key': 'val'},
+        ],
+        'dict_of_lists': {
+            "a": ["something", "here"],
+        }
+    })
+
+    # Check that no exceptions are raised:
+    w = d.get_writable()
+    print w
+    w['new_key'] = 3
+    w['list_of_dicts'].append('another item')
+    w['list_of_dicts'][0]['another_key'] = 'another_value'
+    w['dict_of_lists']['b'] = []
+    w['dict_of_lists']['a'].append('new one')
+
+    print(d.get_writable())
+    # Check that:
+    #   a) the original readonly doesn't contain any of these values
+    #   b) new ``writable`` objects don't contain any of these values
+
+    for o in [d, d.get_writable()]:
+        assert_false('new_key' in o)
+        assert_false('another item' in o['list_of_dicts'])
+        assert_false('another_key' in o['list_of_dicts'][0])
+        assert_false('b' in o['dict_of_lists'])
+        assert_false('new_one' in o['dict_of_lists']['a'])

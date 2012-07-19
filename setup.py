@@ -2,7 +2,7 @@
 # # coding: utf-8
 
 from setuptools import setup
-long_description = open('README.md').read()
+long_description = open('README').read()
 
 
 setup(
@@ -16,7 +16,7 @@ setup(
     packages=['supermutes'],
     zip_safe=True,
     package_data={
-        '': ['*.txt', '*.rst', '*.md'],
+        '': ['*.txt', '*.rst'],
     },
     classifiers=[
         'Development Status :: 4 - Beta',

@@ -9,14 +9,14 @@ setup(
     name='supermutes',
     description='A collection of super mutables',
     long_description=long_description,
-    version='0.1.3',
+    version='0.1.4',
     author='Alex Couper',
     author_email='info@alexcouper.com',
     url='https://github.com/alexcouper/supermutes',
     packages=['supermutes'],
     zip_safe=True,
     package_data={
-        '': ['*.txt', '*.rst'],
+        '': ['*.txt', '*.rst', '*.md'],
     },
     classifiers=[
         'Development Status :: 4 - Beta',

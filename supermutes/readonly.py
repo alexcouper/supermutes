@@ -1,24 +1,18 @@
 "A collection of readonly immutables"
 from copy import deepcopy
 
-from supermutes.utils import get_new_obj, get_class_registrar
+from supermutes.utils import get_new_obj, get_class_registrar, register
 
-CLASS_REGISTER = {}
-
-
-def register(old_class, new_class):
-    CLASS_REGISTER[old_class] = new_class
+readonly = lambda obj: get_new_obj(obj)
 
 
 def reset_mapping():
-    register(dict, ReadOnlyDict)
-    register(list, ReadOnlyList)
+    register(__name__, dict, ReadOnlyDict)
+    register(__name__, list, ReadOnlyList)
 
 
 class ReadOnlyClassException(Exception):
     pass
-
-readonly = lambda obj: get_new_obj(CLASS_REGISTER, obj)
 
 
 class ReadOnlyBaseClass():
@@ -31,7 +25,7 @@ class ReadOnlyBaseClass():
 
 class ReadOnlyList(ReadOnlyBaseClass, list):
 
-    __metaclass__ = get_class_registrar("ReadOnlyList", list, register)
+    __metaclass__ = get_class_registrar("ReadOnlyList", list)
 
     def __getitem__(self, index):
         return readonly(list.__getitem__(self, index))
@@ -50,7 +44,7 @@ class ReadOnlyList(ReadOnlyBaseClass, list):
 
 class ReadOnlyDict(ReadOnlyBaseClass, dict):
 
-    __metaclass__ = get_class_registrar("ReadOnlyDict", dict, register)
+    __metaclass__ = get_class_registrar("ReadOnlyDict", dict)
 
     def __getitem__(self, key):
         return readonly(dict.__getitem__(self, key))

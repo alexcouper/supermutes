@@ -1,18 +1,12 @@
-from supermutes.utils import get_new_obj, get_class_registrar
+from supermutes.utils import get_new_obj, get_class_registrar, register
 
 
-CLASS_REGISTER = {}
-
-dotify = lambda obj: get_new_obj(CLASS_REGISTER, obj)
-
-
-def register(old_class, new_class):
-    CLASS_REGISTER[old_class] = new_class
+dotify = lambda obj: get_new_obj(obj)
 
 
 def reset_mapping():
-    register(dict, DotDict)
-    register(list, DotList)
+    register(__name__, dict, DotDict)
+    register(__name__, list, DotList)
 
 
 class DotList(list):
@@ -32,7 +26,7 @@ class DotList(list):
     IndexError
 
     """
-    __metaclass__ = get_class_registrar("DotList", list, register)
+    __metaclass__ = get_class_registrar("DotList", list)
 
     def __init__(self, *args, **kwargs):
         list.__init__(self, *args, **kwargs)
@@ -81,7 +75,7 @@ class DotDict(dict):
     >>  d
     {'c': 99}
     """
-    __metaclass__ = get_class_registrar("DotDict", dict, register)
+    __metaclass__ = get_class_registrar("DotDict", dict)
 
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
@@ -93,6 +87,5 @@ class DotDict(dict):
 
     __getattr__ = dict.__getitem__
     __setattr__ = __setitem__
-
 
 reset_mapping()

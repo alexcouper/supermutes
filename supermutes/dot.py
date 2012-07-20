@@ -1,4 +1,5 @@
-from supermutes.utils import get_new_obj, get_class_registrar, register
+from supermutes.register import get_new_obj, register
+from supermutes.base import SuperMutable
 
 
 dotify = lambda obj: get_new_obj(obj)
@@ -9,7 +10,7 @@ def reset_mapping():
     register(__name__, list, DotList)
 
 
-class DotList(list):
+class DotList(SuperMutable, list):
     """
     A list that allows dot notation access to its items.
 
@@ -26,8 +27,6 @@ class DotList(list):
     IndexError
 
     """
-    __metaclass__ = get_class_registrar("DotList", list)
-
     def __init__(self, *args, **kwargs):
         list.__init__(self, *args, **kwargs)
         for i, value in enumerate(self):
@@ -53,7 +52,7 @@ class DotList(list):
         list.__setitem__(self, index, dotify(value))
 
 
-class DotDict(dict):
+class DotDict(SuperMutable, dict):
     """
     A dictionary that allows dot notation access to its values.
 
@@ -75,8 +74,6 @@ class DotDict(dict):
     >>  d
     {'c': 99}
     """
-    __metaclass__ = get_class_registrar("DotDict", dict)
-
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
         for key, value in self.items():
@@ -87,5 +84,3 @@ class DotDict(dict):
 
     __getattr__ = dict.__getitem__
     __setattr__ = __setitem__
-
-reset_mapping()

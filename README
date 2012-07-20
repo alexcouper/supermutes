@@ -66,4 +66,16 @@ eg::
     <class 'supermutes.dot.DotDict'>
 
 
+Writing your own ``Supermutable``
+---------------------------------
+
+If you would like to contribute, and write a supermutable that behaves in a
+particular fashion, just try to follow these guidelines:
+
+    * It should inherit from the mutable type that it is adapting (eg ``dict``
+      ``list`` etc.)
+    * It should also inherit from ``base.SuperMutable``. This takes care of
+      all of the registering of any subclasses so that for example, all sub
+      dicts added to the SuperMutable are changed accordingly.
+
 

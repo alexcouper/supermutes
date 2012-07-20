@@ -3,6 +3,7 @@ from copy import deepcopy
 
 from supermutes.register import get_new_obj, register
 from supermutes.base import SuperMutable
+
 readonly = lambda obj: get_new_obj(obj)
 
 
@@ -15,7 +16,7 @@ class ReadOnlyClassException(Exception):
     pass
 
 
-class ReadOnlyBaseClass():
+class ReadOnlyBaseClass(object):
 
     def method_not_allowed(self, *args, **kwargs):
         raise ReadOnlyClassException("Cannot write to object.")
@@ -25,7 +26,7 @@ class ReadOnlyBaseClass():
      reverse, sort) = (method_not_allowed,) * 15
 
 
-class ReadOnlyList(SuperMutable, ReadOnlyBaseClass, list):
+class ReadOnlyList(ReadOnlyBaseClass, SuperMutable, list):
 
     def __getitem__(self, index):
         return readonly(list.__getitem__(self, index))
@@ -42,7 +43,7 @@ class ReadOnlyList(SuperMutable, ReadOnlyBaseClass, list):
         return deepcopy(writable)
 
 
-class ReadOnlyDict(SuperMutable, ReadOnlyBaseClass, dict):
+class ReadOnlyDict(ReadOnlyBaseClass, SuperMutable, dict):
 
     def __getitem__(self, key):
         return readonly(dict.__getitem__(self, key))

@@ -3,6 +3,7 @@ from supermutes.base import SuperMutable
 
 
 dotify = lambda obj: get_new_obj(obj)
+"Helper function for converting a mutable"
 
 
 def reset_mapping():
@@ -32,6 +33,9 @@ class DotList(SuperMutable, list):
         for i, value in enumerate(self):
             self[i] = value
 
+    def mutate(self, value):
+        return get_new_obj(value)
+
     def __getattr__(self, attr):
         try:
             index = int(attr.strip('_'))
@@ -46,10 +50,7 @@ class DotList(SuperMutable, list):
             self[index] = value
         except ValueError:
             pass
-        list.__setattr__(self, attr, dotify(value))
-
-    def __setitem__(self, index, value):
-        list.__setitem__(self, index, dotify(value))
+        super(DotList, self).__setattr__(attr, value)
 
 
 class DotDict(SuperMutable, dict):
@@ -79,8 +80,8 @@ class DotDict(SuperMutable, dict):
         for key, value in self.items():
             self[key] = value
 
-    def __setitem__(self, key, value):
-        super(DotDict, self).__setitem__(key, dotify(value))
+    def mutate(self, value):
+        return get_new_obj(value)
 
     __getattr__ = dict.__getitem__
-    __setattr__ = __setitem__
+    __setattr__ = SuperMutable.__setitem__

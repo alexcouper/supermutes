@@ -31,11 +31,12 @@ class RegisterClass(type):
     """
     def __init__(cls, name, bases, attrs):
         try:
-            if issubclass(bases[0], SuperMutable):
-                supermute = get_supermute_ancestor(cls)
-                map_to_class = get_mutable_type(supermute)
-                register(supermute.__module__, map_to_class, cls)
-
+            for base in bases:
+                if issubclass(base, SuperMutable):
+                    supermute = get_supermute_ancestor(cls)
+                    map_to_class = get_mutable_type(supermute)
+                    register(supermute.__module__, map_to_class, cls)
+                    return
         except NameError:
             pass
         return
@@ -43,3 +44,10 @@ class RegisterClass(type):
 
 class SuperMutable(object):
     __metaclass__ = RegisterClass
+
+    def mutate(self, value):
+        raise NotImplementedError("Mutate() must be implemented on"
+                                  " SuperMutable objects")
+
+    def __setitem__(self, key, value):
+        super(SuperMutable, self).__setitem__(key, self.mutate(value))

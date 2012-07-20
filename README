@@ -76,6 +76,7 @@ particular fashion, just try to follow these guidelines:
       ``list`` etc.)
     * It should also inherit from ``base.SuperMutable``. This takes care of
       all of the registering of any subclasses so that for example, all sub
-      dicts added to the SuperMutable are changed accordingly.
+      dicts added to the SuperMutable are changed accordingly. See example.py
+      for a working sample.
 
 

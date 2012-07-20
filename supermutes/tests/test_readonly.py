@@ -109,6 +109,7 @@ def test_blocks_writes_on_mix_of_dicts_and_lists():
 
     raised = False
     try:
+        print(type(['list_of_dicts'][0]))
         d['list_of_dicts'][0]['g'] = 2
     except ReadOnlyClassException:
         raised = True

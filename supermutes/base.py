@@ -14,7 +14,6 @@ def get_supermute_ancestor(cls):
 
 def get_mutable_type(cls):
     for mutable in [dict, list, set]:
-        print "22222", inspect.getmro(cls)
         if mutable in inspect.getmro(cls):
             return mutable
 

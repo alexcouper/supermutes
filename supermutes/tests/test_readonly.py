@@ -62,7 +62,6 @@ def test_blocks_write_to_list():
                         ]:
         raised = False
         try:
-            print method
             method(*args)
         except ReadOnlyClassException:
             raised = True
@@ -149,14 +148,12 @@ def test_get_writable_version_of_the_object():
 
     # Check that no exceptions are raised:
     w = d.get_writable()
-    print w
     w['new_key'] = 3
     w['list_of_dicts'].append('another item')
     w['list_of_dicts'][0]['another_key'] = 'another_value'
     w['dict_of_lists']['b'] = []
     w['dict_of_lists']['a'].append('new one')
 
-    print(d.get_writable())
     # Check that:
     #   a) the original readonly doesn't contain any of these values
     #   b) new ``writable`` objects don't contain any of these values

@@ -80,7 +80,7 @@ class DotDict(SuperMutable, dict):
             self[key] = value
 
     def __setitem__(self, key, value):
-        dict.__setitem__(self, key, dotify(value))
+        super(DotDict, self).__setitem__(key, dotify(value))
 
     __getattr__ = dict.__getitem__
     __setattr__ = __setitem__

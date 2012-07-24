@@ -28,6 +28,9 @@ class ReadOnlyBaseClass(object):
 
 class ReadOnlyList(ReadOnlyBaseClass, SuperMutable, list):
 
+    def __iter__(self):
+        return (readonly(x) for x in list.__iter__(self))
+
     def __getitem__(self, index):
         return readonly(list.__getitem__(self, index))
 
@@ -44,6 +47,15 @@ class ReadOnlyList(ReadOnlyBaseClass, SuperMutable, list):
 
 
 class ReadOnlyDict(ReadOnlyBaseClass, SuperMutable, dict):
+
+    def items(self):
+        return readonly(dict.items(self))
+
+    def keys(self):
+        return readonly(dict.keys(self))
+
+    def values(self):
+        return readonly(dict.values(self))
 
     def __getitem__(self, key):
         return readonly(dict.__getitem__(self, key))

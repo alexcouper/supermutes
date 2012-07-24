@@ -1,3 +1,4 @@
+from copy import deepcopy
 from nose.tools import assert_equals, assert_true, assert_false
 
 from supermutes.readonly import (
@@ -82,6 +83,27 @@ def test_can_read_everything():
     d = readonly({'s': [1, 2, 3, 4, 5], 'a': 2})
     assert_equals(2, d['a'])
     assert_equals(3, d['s'][2])
+
+
+def test_blocks_write_during_iterate_through_list():
+    d = readonly([{'s': [1, 2, 3, 4, 5], 'a': 2}])
+    for item in d:
+        raised = False
+        try:
+            item['new'] = False
+        except ReadOnlyClassException:
+            raised = True
+        assert_true(raised)
+
+
+def test_writes_during_iterate_through_dict_dont_matter():
+    d = readonly([{'s': [1, 2, 3, 4, 5], 'a': [2]}])
+
+    for key, value in d[0].items():
+        before = deepcopy(value)
+        value.append(3)
+        assert_equals(before, d[0][key])
+    #TODO: make this work.
 
 
 def test_blocks_writes_on_mix_of_dicts_and_lists():

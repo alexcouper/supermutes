@@ -90,6 +90,5 @@ After cloning the repo::
     $ pip install -r test-requirements.txt
     $ nosetests
 
-``supermutes`` has a build on
-<a href="http://travis-ci.org/alexcouper/supermutes">travis-ci</a>
+``supermutes`` has a build job at http://travis-ci.org/alexcouper/supermutes
 

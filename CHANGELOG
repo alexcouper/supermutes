@@ -1,6 +1,7 @@
 Changelog
 =========
 
+* Make the code work on py3.2
 * Add travis yaml file.
 * Add documentation to classes in models
 * Make iterations through a readonly dict return readonly objects

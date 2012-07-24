@@ -81,7 +81,15 @@ class DotDict(SuperMutable, dict):
             self[key] = value
 
     def mutate(self, value):
-        return get_new_obj(value)
+        print("mutating", value)
+        obj = get_new_obj(value)
+        print("got", obj, type(obj))
+        return obj
 
     __getattr__ = dict.__getitem__
     __setattr__ = SuperMutable.__setitem__
+
+
+d = DotDict({})
+d.li = [1, 2, 3]
+d.li._0

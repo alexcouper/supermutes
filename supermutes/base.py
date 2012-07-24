@@ -18,7 +18,7 @@ def get_mutable_type(cls):
             return mutable
 
 
-class RegisterClass(type):
+class RegisterMetaClass(type):
     """
     A metaclass used for registering any subclass as the main converter
 
@@ -30,6 +30,7 @@ class RegisterClass(type):
     register against the appropriate module and mutable type.
     """
     def __init__(cls, name, bases, attrs):
+        print("RegisterClass", cls, name, bases)
         try:
             for base in bases:
                 if issubclass(base, SuperMutable):
@@ -42,8 +43,15 @@ class RegisterClass(type):
         return
 
 
-class SuperMutable(object):
-    __metaclass__ = RegisterClass
+RegisterClass = RegisterMetaClass('RegisterClass', (object, ), {})
+# In python3 we would need to use
+# class SuperMutable(object, metaclass=RegisterMetaClass)
+# and in python2.6 we would need to use the var
+# __metaclass__
+# Declaring RegisterClass in this way makes the code work on both 3.2 and 2.6
+
+
+class SuperMutable(RegisterClass):
 
     def mutate(self, value):
         raise NotImplementedError("Mutate() must be implemented on"

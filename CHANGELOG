@@ -1,6 +1,9 @@
 Changelog
 =========
 
+0.2.2
+-----
+
 * Make the code work on py3.2
 * Add travis yaml file.
 * Add documentation to classes in models

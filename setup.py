@@ -9,7 +9,7 @@ setup(
     name='supermutes',
     description='A collection of super mutables',
     long_description=long_description,
-    version='0.2.1',
+    version='0.2.2',
     author='Alex Couper',
     author_email='info@alexcouper.com',
     url='https://github.com/alexcouper/supermutes',
@@ -25,6 +25,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
 )

@@ -27,7 +27,19 @@ class ReadOnlyBaseClass(object):
 
 
 class ReadOnlyList(ReadOnlyBaseClass, SuperMutable, list):
+    """
+    A list that allows read only access to its items.
 
+    For example:
+
+    >> foo = ReadOnlyList(['a', 'b', 'c'])
+    >> foo[0]
+    'a'
+    >> foo.append('d')
+    ReadOnlyClassException: Cannot write to object.
+    >> del foo[1]
+    ReadOnlyClassException: Cannot write to object.
+    """
     def __iter__(self):
         return (readonly(x) for x in list.__iter__(self))
 
@@ -47,9 +59,24 @@ class ReadOnlyList(ReadOnlyBaseClass, SuperMutable, list):
 
 
 class ReadOnlyDict(ReadOnlyBaseClass, SuperMutable, dict):
+    """
+    A dictionary that allows read only access to its items.
 
+    For example:
+
+    >> foo = ReadOnlyDict({'a': 12, 'b': {'something': 5}})
+    >> foo['a']
+    12
+    >> foo['c'] = "another"
+    ReadOnlyClassException: Cannot write to object.
+    >> foo['b']['something'] = 6
+    ReadOnlyClassException: Cannot write to object.
+    """
     def items(self):
-        return readonly(dict.items(self))
+        response = []
+        for key, value in dict.items(self):
+            response.append((key, readonly(value)))
+        return response
 
     def keys(self):
         return readonly(dict.keys(self))

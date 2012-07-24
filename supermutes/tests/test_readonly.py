@@ -100,10 +100,12 @@ def test_writes_during_iterate_through_dict_dont_matter():
     d = readonly([{'s': [1, 2, 3, 4, 5], 'a': [2]}])
 
     for key, value in d[0].items():
-        before = deepcopy(value)
-        value.append(3)
-        assert_equals(before, d[0][key])
-    #TODO: make this work.
+        raised = False
+        try:
+            value.append(3)
+        except  ReadOnlyClassException:
+            raised = True
+        assert_true(raised)
 
 
 def test_blocks_writes_on_mix_of_dicts_and_lists():

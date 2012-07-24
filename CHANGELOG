@@ -1,6 +1,10 @@
 Changelog
 =========
 
+* Add travis yaml file.
+* Add documentation to classes in models
+* Make iterations through a readonly dict return readonly objects
+
 0.2.1
 -----
 

@@ -1,6 +1,6 @@
 import inspect
 
-from register import register
+from supermutes.register import register
 
 
 def get_supermute_ancestor(cls):

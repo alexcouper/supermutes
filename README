@@ -80,3 +80,14 @@ particular fashion, just try to follow these guidelines:
       for a working sample.
 
 
+Building
+--------
+
+After cloning the repo::
+
+    $ pip install -r test-requirements.txt
+    $ nosetests
+
+``supermutes`` has a build on
+<a href="http://travis-ci.org/alexcouper/supermutes">travis-ci</a>
+

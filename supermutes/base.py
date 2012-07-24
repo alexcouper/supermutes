@@ -30,7 +30,6 @@ class RegisterMetaClass(type):
     register against the appropriate module and mutable type.
     """
     def __init__(cls, name, bases, attrs):
-        print("RegisterClass", cls, name, bases)
         try:
             for base in bases:
                 if issubclass(base, SuperMutable):

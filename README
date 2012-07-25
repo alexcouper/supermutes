@@ -40,6 +40,17 @@ eg::
     >> r['b']['d'] = 6
     supermutes.readonly.ReadOnlyClassException: Cannot write to object.
 
+A decorator function is also available for readonly objects. It will
+readonly-fy the output of the decorated function/method
+
+eg:
+
+    from supermutes.decorators import return_readonly
+
+    @return_readonly
+    def get_list():
+        return ['12']
+
 
 Creating Sub Classes
 --------------------

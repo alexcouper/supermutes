@@ -1,6 +1,9 @@
 Changelog
 =========
 
+0.2.4
+-----
+
 * Add decorator module with readonly decorator.
 
 0.2.3

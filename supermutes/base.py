@@ -46,7 +46,7 @@ RegisterClass = RegisterMetaClass('RegisterClass', (object, ), {})
 # In python3 we would need to use
 # class SuperMutable(object, metaclass=RegisterMetaClass)
 # and in python2.6 we would need to use the var
-# __metaclass__
+# __metaclass__ = RegisterMetaClass
 # Declaring RegisterClass in this way makes the code work on both 3.2 and 2.6
 
 

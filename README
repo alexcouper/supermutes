@@ -43,7 +43,7 @@ eg::
 A decorator function is also available for readonly objects. It will
 readonly-fy the output of the decorated function/method
 
-eg:
+eg::
 
     from supermutes.decorators import return_readonly
 

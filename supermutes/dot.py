@@ -78,6 +78,7 @@ class DotDict(SuperMutable, dict):
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
         for key, value in self.items():
+            key = key.replace(' ', '_')
             self[key] = value
 
     def mutate(self, value):

@@ -129,3 +129,8 @@ def test_defining_inherited_classes_alters_mapping():
     assert_false(isinstance(d, MySubClass))
     assert_false(isinstance(d['a'], MySubClass))
     assert_false(isinstance(d['a']['b'], MySubClass))
+
+
+def test_dot_with_space_in_names():
+    d = dotify({'key one': 1})
+    assert_equals(1, d.key_one)

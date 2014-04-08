@@ -1,4 +1,4 @@
-from nose.tools import assert_equals, assert_true, assert_false
+from nose.tools import assert_equals, assert_true, assert_false, assert_raises
 
 from supermutes.dot import DotDict, dotify, reset_mapping
 
@@ -134,3 +134,11 @@ def test_defining_inherited_classes_alters_mapping():
 def test_dot_with_space_in_names():
     d = dotify({'key one': 1})
     assert_equals(1, d.key_one)
+    assert_equals(1, d['key one'])
+
+
+def test_dot_with_space_clash():
+    assert_raises(ValueError, dotify, {
+        'key one': 1,
+        'key_one': 2
+    })

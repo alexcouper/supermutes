@@ -58,8 +58,8 @@ def do_benchmark(data, func):
 if __name__ == '__main__':
     data = deepcopy(DATA)
     time_call("dict total", do_benchmark, data, dict)
-    print '----'
+    print('----')
     time_call("dotify total", do_benchmark, data, dotify)
-    print "----"
+    print("----")
     data = deepcopy(DATA)
     time_call("readonly total", do_benchmark, data, readonly)

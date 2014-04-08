@@ -77,9 +77,17 @@ class DotDict(SuperMutable, dict):
     """
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
+        keys_to_add = []
         for key, value in self.items():
-            key = key.replace(' ', '_')
+            if ' ' in key:
+                keys_to_add.append(key)
             self[key] = value
+
+        for key in keys_to_add:
+            new_key = key.replace(' ', '_')
+            if new_key in self:
+                raise ValueError("Key clash: {0} and {1}".format(new_key, key))
+            self[new_key] = self[key]
 
     def mutate(self, value):
         return get_new_obj(value)

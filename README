@@ -3,7 +3,7 @@ supermutes
 
 This library works with python 2.6, 2.7 and 3.2.
 
-It defines two kinds of mutables.
+It defines three kinds of mutables.
 
 dot
 ---
@@ -50,6 +50,14 @@ eg::
     @return_readonly
     def get_list():
         return ['12']
+
+
+OrderedDefaultDict
+------------------
+
+The ``ordered`` module contains the ``OrderedDefaultDict`` class. It is an
+implementation that is meant to be the child of an ``OrderedDict`` and a
+``defaultdict`` from the python standard library.
 
 
 Creating Sub Classes

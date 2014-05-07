@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2.5
+-----
+
+* Add OrderedDefaultDict
+
 0.2.4
 -----
 
